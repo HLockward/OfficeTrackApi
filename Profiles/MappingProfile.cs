@@ -16,5 +16,10 @@ public class MappingProfile : Profile
         CreateMap<MaintenanceTask, MaintenanceTaskDto>().ReverseMap();
         CreateMap<CreateMaintenanceTaskDto, MaintenanceTask>();
         CreateMap<UpdateMaintenanceTaskDto, MaintenanceTask>();
+
+        CreateMap<Equipment, EquipmentMaintenanceDto>()
+            .ForMember(dest => dest.EquipmentType, opt => opt.MapFrom(src => src.EquipmentType.Description))
+            .ForMember(dest => dest.MaintenanceTasks, opt => opt.MapFrom(src =>
+                src.EquipmentMaintenances.Select(em => em.MaintenanceTask.Description)));
     }
 }

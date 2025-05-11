@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace OfficeTrackApi.Repositories;
@@ -45,6 +46,20 @@ public class Repository<T> : IRepository<T> where T : class
         return entity;
     }
 
+    public async Task<T?> FindSingleAsync(
+        Expression<Func<T, bool>> predicate,
+        Func<IQueryable<T>, IQueryable<T>>? include = null)
+    {
+        IQueryable<T> query = _dbSet.Where(predicate);
+
+        if (include != null)
+        {
+            query = include(query);
+        }
+
+        return await query.FirstOrDefaultAsync();
+    }
+
     public void Update(T entity)
     {
         _dbSet.Update(entity);
@@ -53,5 +68,10 @@ public class Repository<T> : IRepository<T> where T : class
     public void Delete(T entity)
     {
         _dbSet.Remove(entity);
+    }
+
+    public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _dbSet.AnyAsync(predicate);
     }
 }
