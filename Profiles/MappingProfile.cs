@@ -18,8 +18,13 @@ public class MappingProfile : Profile
         CreateMap<UpdateMaintenanceTaskDto, MaintenanceTask>();
 
         CreateMap<Equipment, EquipmentMaintenanceDto>()
+            .ForMember(dest => dest.EquipmentId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.EquipmentType, opt => opt.MapFrom(src => src.EquipmentType.Description))
-            .ForMember(dest => dest.MaintenanceTasks, opt => opt.MapFrom(src =>
-                src.EquipmentMaintenances.Select(em => em.MaintenanceTask.Description)));
+            .ForMember(dest => dest.MaintenanceTasks, opt => opt.MapFrom(src => src.EquipmentMaintenances
+                .Select(em => new MaintenanceTaskDto
+                {
+                    Id = em.MaintenanceTask.Id,
+                    Description = em.MaintenanceTask.Description,
+                })));
     }
 }

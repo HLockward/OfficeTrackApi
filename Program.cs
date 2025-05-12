@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OfficeTrackApi.Data;
 using OfficeTrackApi.Entities;
 using OfficeTrackApi.Repositories;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,17 +26,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.UseSwaggerUI(opt =>
-    {
-        opt.SwaggerEndpoint("/openapi/v1.json", "OfficeTrack API V1");
-    });
-}
-
-app.UseAuthorization();
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.MapControllers();
 

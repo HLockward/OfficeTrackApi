@@ -6,5 +6,5 @@ public class EquipmentMaintenanceDto
     public string Brand { get; set; } = null!;
     public string Model { get; set; } = null!;
     public string EquipmentType { get; set; } = null!;
-    public List<string> MaintenanceTasks { get; set; } = [];
+    public List<MaintenanceTaskDto> MaintenanceTasks { get; set; } = [];
 }

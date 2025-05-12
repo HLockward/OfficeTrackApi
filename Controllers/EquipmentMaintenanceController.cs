@@ -26,7 +26,7 @@ public class EquipmentMaintenanceController : ControllerBase
             q => q
                 .Include(e => e.EquipmentType)
                 .Include(e => e.EquipmentMaintenances)
-                    .ThenInclude(em => em.MaintenanceTask)
+                .ThenInclude(em => em.MaintenanceTask)
         );
 
         if (equipment is null)
