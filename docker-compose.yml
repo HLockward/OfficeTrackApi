@@ -20,6 +20,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=OfficeTrackDb;User Id=sa;Password=SqlPassword123;TrustServerCertificate=True;
+      - ScalarServer=http://localhost:6500
     depends_on:
       - sqlserver
 

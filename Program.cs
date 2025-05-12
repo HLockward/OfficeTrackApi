@@ -45,7 +45,13 @@ var app = builder.Build();
 app.UseCors("AllowAll");
 
 app.MapOpenApi();
-app.MapScalarApiReference();
+app.MapScalarApiReference(options =>
+{
+    options.Servers =
+    [
+        new ScalarServer(builder.Configuration["ScalarServer"] ?? throw new ArgumentNullException("ScalarServer", "ScalarServer configuration value is missing"))
+    ];
+});
 
 app.MapControllers();
 
